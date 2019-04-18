@@ -1,0 +1,15 @@
+{include file="index/header" title="注册页面"/}
+
+    <h2>注册用户</h2>
+    <!-- 注意要在form表单中写上 enctype="multipart/form-data" 属性，否则文件上传不了-->
+    <FORM method="post" enctype="multipart/form-data" class="form" action="{:url('index/index/register')}">
+        昵 称：<INPUT type="text" class="text" name="username"><br />
+        密 码：<INPUT type="password" class="text" name="password"><br />
+        身份证号：<INPUT type="text" class="text" name="idcard"><br />
+        电话号码：<INPUT type="text" class="text" name="telephone"><br />
+        账户余额：<INPUT type="text" class="text" name="account"><br />
+        身份证照片：<INPUT type="file" class="file" name="identity"><br />
+        个人信用报告文件：<INPUT type="file" class="file" name="credit"><br />
+        <INPUT type="submit" class="btn" value=" 提交 ">
+    </FORM>
+{include file="index/footer" /}

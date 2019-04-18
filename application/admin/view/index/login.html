@@ -1,0 +1,54 @@
+{include file="index/header" title="管理员登陆页面"/}
+
+<style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .think_default_text {
+        padding: 4px 48px;
+    }
+
+    a {
+        color: #2E5CD5;
+        cursor: pointer;
+        text-decoration: none
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    body {
+        background: #fff;
+        font-family: "Century Gothic", "Microsoft yahei";
+        color: #333;
+        font-size: 18px
+    }
+
+    h1 {
+        font-size: 100px;
+        font-weight: normal;
+        margin-bottom: 12px;
+    }
+
+    p {
+        line-height: 1.6em;
+        font-size: 42px
+    }
+</style>
+<div style="padding: 24px 48px;">
+    <h1>:)</h1>
+    <p> 管理员登陆界面<br /><span style="font-size:30px">欢迎进入{$name}的网贷系统</span></p>
+</div>
+
+<!-- action="{:url('index/user/add')}"   意思：当提交后去访问index模块的index控制器的login方法  -->
+<form name="input" action="{:url('admin/index/login')}" method="POST">
+    用户名: <input type="text" name="username"><br>
+    密码: <input type="password" name="password"><br>
+    <input type="submit" value="登陆">
+</form>
+<br>
+
+{include file="index/footer" /}

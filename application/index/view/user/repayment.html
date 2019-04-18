@@ -1,0 +1,17 @@
+{include file="user/header" title="还款页面"/}
+<div>
+    <a href="http://www.sc.com/index/user/index">返回首页</a>
+
+    <div class="info">
+        ID：{$id}<br />
+        正常利息：{$normal_percent}<br />
+        逾期利息：{$overdue_percent}<br />
+        借款天数：{$day}<br />
+        是否完成投标：{$issuccess}<br />
+        已逾期天数：{$overdue_day}<br />
+        需要还款总额：{$amount}<br />
+        <a href="http://www.sc.com/index/user/setsession">确认还款</a>
+    </div>
+
+</div>
+{include file="user/footer" /}

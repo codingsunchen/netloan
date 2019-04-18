@@ -1,0 +1,23 @@
+{include file="user/header" title="出借"/}
+
+<div>
+出借人首页，在这里显示所有的未完成投标的项目，可以选择一个项目进行投标
+在这里可以查看参与过的历史完成的项目。
+</div>
+
+
+<h2>项目列表（{$count}）</h2>
+{volist name="list" id="project" }
+<div class="info">
+    ID：{$project.id}<br />
+    借款人id：{$project.borrow_id}<br />
+    需要接的总钱数：{$project.total_money}<br />
+    已借到的钱：{$project.existence_money}<br />
+    正常利息：{$project.normal_percent}<br />
+    逾期利息：{$project.overdue_percent}<br />
+    所借天数：{$project.day}<br />
+    <a href="//www.sc.com/index/user/apply_lend/project_id/{$project.id}">选择该项目投资</a>
+</div>
+{/volist}
+
+{include file="user/footer" /}

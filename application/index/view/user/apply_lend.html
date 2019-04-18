@@ -1,0 +1,9 @@
+{include file="user/header" title="投资"/}
+
+<h2>投资操作</h2>
+<!-- 注意要在form表单中写上 enctype="multipart/form-data" 属性，否则文件上传不了-->
+<FORM method="post" class="form" action="{$project_id} ">
+    借出金额：<INPUT type="text" class="text" name="lend_money"><br />
+    <INPUT type="submit" class="btn" value=" 提交 ">
+</FORM>
+{include file="user/footer" /}
