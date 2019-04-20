@@ -1,0 +1,18 @@
+{include file="index/header" title="借款人信息"/}
+
+<div style="padding: 24px 48px;">
+
+    <a href="http://www.sc.com/admin.html">首页</a>
+    <h2>用户信息</h2>
+    <div class="info">
+        ID：{$user.id}<br />
+        用户名：{$user.username}<br />
+        身份证号：{$user.idcard}<br />
+        电话号码：{$user.telephone}<br />
+        账户余额：{$user.account}<br />
+        身份证照片：<br> <img border="0" src="{$user.identity}" alt="图片加载失败" width="304" height="228"> <br>
+        个人信用报告文件：<br> <img border="0" src="{$user.credit}" alt="图片加载失败" width="304" height="228"> <br>
+    </div>
+</div>
+
+{include file="index/footer" /}

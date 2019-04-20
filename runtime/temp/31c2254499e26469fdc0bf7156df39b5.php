@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"C:\wamp\www\myproject\public/../application/index\view\user\lend.html";i:1555340536;s:71:"C:\wamp\www\myproject\public/../application/index\view\user\header.html";i:1555571633;s:71:"C:\wamp\www\myproject\public/../application/index\view\user\footer.html";i:1555306651;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:69:"C:\wamp\www\myproject\public/../application/index\view\user\lend.html";i:1555740490;s:71:"C:\wamp\www\myproject\public/../application/index\view\user\header.html";i:1555571633;s:71:"C:\wamp\www\myproject\public/../application/index\view\user\footer.html";i:1555306651;}*/ ?>
 <!doctype html>
 <html lang="en">
 
@@ -90,7 +90,7 @@
 在这里可以查看参与过的历史完成的项目。
 </div>
 
-
+<a href="//www.sc.com/index/user/personal">个人中心</a>
 <h2>项目列表（<?php echo $count; ?>）</h2>
 <?php if(is_array($list) || $list instanceof \think\Collection): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$project): $mod = ($i % 2 );++$i;?>
 <div class="info">

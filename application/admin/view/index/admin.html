@@ -1,0 +1,43 @@
+{include file="index/header" title="管理员首页"/}
+
+<div style="padding: 24px 48px;">
+    <a href="http://www.sc.com/admin/index/logout">退出登陆</a>
+
+    <!--在下面的这三个项目表中，再给每一个项目添加一个链接可以查看该项目的详情信息，这个另起一个html文件用来做展示-->
+    <a href="http://www.sc.com/admin/user/notFinished">未完成投标的项目表</a>
+    <a href="http://www.sc.com/admin/user/finished">已完成投标的项目表</a>
+    <a href="http://www.sc.com/admin/user/successProject">已完成还款的项目</a>
+    <p> 用户已经登陆这是管理员首页<br /><span style="font-size:30px">欢迎进入孙晨的网贷系统</span></p>
+
+
+    <h2>已认证用户：（{$listcount}）</h2>
+    {volist name="list" id="user" }
+    <div class="info">
+        ID：{$user.id}<br />
+        用户名：{$user.username}<br />
+        身份证号：{$user.idcard}<br />
+        电话号码：{$user.telephone}<br />
+        账户余额：{$user.account}<br />
+        身份证照片：<br> <img border="0" src="{$user.identity}" alt="图片加载失败" width="304" height="228"> <br>
+        个人信用报告文件：<br> <img border="0" src="{$user.credit}" alt="图片加载失败" width="304" height="228"> <br>
+       
+    </div>
+    {/volist}
+
+    <h2>未认证用户：（{$nolistcount}）</h2>
+    {volist name="nolist" id="user" }
+    <div class="info">
+        ID：{$user.id}<br />
+        用户名：{$user.username}<br />
+        身份证号：{$user.idcard}<br />
+        电话号码：{$user.telephone}<br />
+        账户余额：{$user.account}<br />
+        身份证照片：<br> <img border="0" src="{$user.identity}" alt="图片加载失败" width="304" height="228"> <br>
+        个人信用报告文件：<br> <img border="0" src="{$user.credit}" alt="图片加载失败" width="304" height="228"> <br>
+        
+        <a href="http://www.sc.com/admin/user/passAuthentication/userid/{$user.id}">确认该用户通过认证</a>
+    </div>
+    {/volist}
+    
+</div>
+{include file="index/footer" /}

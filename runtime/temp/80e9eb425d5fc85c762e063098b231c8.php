@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:73:"C:\wamp\www\myproject\public/../application/index\view\user\personal.html";i:1555574089;s:71:"C:\wamp\www\myproject\public/../application/index\view\user\header.html";i:1555571633;s:71:"C:\wamp\www\myproject\public/../application/index\view\user\footer.html";i:1555306651;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:73:"C:\wamp\www\myproject\public/../application/index\view\user\personal.html";i:1555742804;s:71:"C:\wamp\www\myproject\public/../application/index\view\user\header.html";i:1555571633;s:71:"C:\wamp\www\myproject\public/../application/index\view\user\footer.html";i:1555306651;}*/ ?>
 <!doctype html>
 <html lang="en">
 
@@ -95,7 +95,6 @@
         ID：<?php echo $Details['project_id']; ?><br />
         借款人id：<?php echo $Details['borrow_id']; ?><br />
         借出的钱数：<?php echo $Details['lend_money']; ?><br />
-        是否完成投标<?php echo $Details['issuccess']; ?><br />
     </div>
     <?php endforeach; endif; else: echo "" ;endif; ?>
 

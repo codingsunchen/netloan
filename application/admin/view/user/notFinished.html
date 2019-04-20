@@ -1,0 +1,24 @@
+{include file="index/header" title="管理员首页"/}
+
+<div style="padding: 24px 48px;">
+    <a href="http://www.sc.com/admin.html">首页</a>
+
+    <h2>项目信息（{$listcount}）</h2>
+    {volist name="list" id="project" }
+    <div class="info">
+        项目ID：{$project.id}<br />
+        借款人ID：{$project.borrow_id}<br />
+        借款的总钱数：{$project.total_money}<br />
+        已借到的钱数：{$project.existence_money}<br />
+        正常利息：{$project.normal_percent}<br />
+        逾期利息：{$project.overdue_percent}<br />
+        借款天数：{$project.day}<br />
+        项目创建时间：{$project.create_time}<br />
+        借款人姓名：后期加上<br />
+        <a href="http://www.sc.com/index.php?s=admin/user/user_info/userid/{$project.borrow_id}">查看借款人信息</a>
+        <a href="http://www.sc.com/index.php?s=admin/user/details_info/projectid/{$project.id}">查看项目详情</a>
+    </div>
+    {/volist}
+</div>
+
+{include file="index/footer" /}

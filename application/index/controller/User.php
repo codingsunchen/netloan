@@ -11,6 +11,7 @@ use app\index\model\Test;
 use app\index\model\Details;
 use app\index\model\Project;
 use app\index\model\Completed;
+use app\index\model\Successproject;
 use think\Validate;
 use think\Request;
 use think\Session;
@@ -40,6 +41,15 @@ class User extends Controller
     //申请借钱
     public function apply_borrow()
     {
+        //从session中获取当前用户的id，这样就知道当前是哪个用户在进行借款操作
+        $borrow_id = Session::get('user_id');
+
+        $user = Users::get($borrow_id);
+        //判断是否通过了认证，如果管理员没有给这个用户通过认证，则不能进行借款活动
+        if ($user->authentication == 0) {
+                $this->error('您还未通过管理员的认证，不能进行借款活动', 'personal');
+        }
+
         if($_POST)
         {
             $request = Request::instance();
@@ -47,9 +57,6 @@ class User extends Controller
             $day = $request->param('day');
             $normal_percent = $request->param('normal_percent');
             $overdue_percent = $request->param('overdue_percent');
-
-            //从session中获取当前用户的id，这样就知道当前是哪个用户在进行借款操作
-            $borrow_id = Session::get('user_id');
 
             //empty(var)函数，当var存在并且非零时返回false否则返回ture
             if(empty($borrow_id))
@@ -108,8 +115,7 @@ class User extends Controller
     //还款页面
     public function repayment()
     {
-        echo "call reapyment function";
-        echo "<br>";
+        trace("call reapyment function");
         
         $myid = Session::get('user_id');
 
@@ -118,6 +124,7 @@ class User extends Controller
 
         $a = $record->start_day;
         $nowtime = date_create(NULL);
+        $now_time = date("Y-m-d H:i:s", time());
         $startday = date_create( $record->start_day);
         //已经借钱的总天数（包括没有逾期的天数和逾期的天数）
         $borrowday = date_diff($startday, $nowtime)->format("%a");
@@ -179,6 +186,8 @@ class User extends Controller
                 //////////////////////////////////////////////////一对多关联操作
                 $project = Project::getByborrow_id($user->id);
                 $issuccess = $project->issuccess;
+                //给所有借出人归还的总钱数  本金+利息
+                $repay_totalmoney = 0;
                 trace('######');
                 foreach($project->detail as $detail)
                 {
@@ -187,10 +196,19 @@ class User extends Controller
                     $lenduser = Users::get($lender_id);
                     if($issuccess)
                     {
-                        //还钱
-                        $money = ($detail->lend_money * $record->normal_percent * ($borrowday - $overdue_day))
+                        //计算应该给这个借出人还的总钱数，本金+利息
+                        $money = $detail->lend_money + ($detail->lend_money * $record->normal_percent * ($borrowday - $overdue_day))
                                 + ($detail->lend_money * $record->overdue_percent * $overdue_day);
-                        $lenduser->account += $detail->lend_money;   
+
+                        echo "money is :" . $money . "<br>";
+                            
+                        //将本金+利息归还
+                        $lenduser->account += $money;  
+
+                        //将给该借出人的归还总钱加入到 $repay_totoalmoney中
+                        $repay_totalmoney += $money;
+                        trace("$repay_totalmoney");
+                        echo "repay_totalmoney is:" . $repay_totalmoney . "<br>";
 
                         //存入completed表中
                         $complete = new Completed;
@@ -201,7 +219,7 @@ class User extends Controller
                         $complete->overdue_percent = $record->overdue_percent;
                         $complete->total_money = $record->total_money;
                         $complete->start_day = $a;
-                        $complete->end_day = date("Y-m-d H:i:s", time());
+                        $complete->end_day = $now_time;
                         trace("call complete->save()");
                         if($complete->save())
                         {
@@ -231,6 +249,29 @@ class User extends Controller
                     trace("下次 foreach");
                 }
                 trace("foreache 完成");
+
+                //如果该项目是已完成投标的项目，则将该项目加入到successproject表中
+                if($issuccess)
+                {
+                    $successproject = new Successproject;
+                    $successproject->borrow_id = $project->borrow_id;
+                    $successproject->total_money = $project->total_money;
+                    $successproject->repayment_money = $repay_totalmoney;
+                    $successproject->normal_percent = $project->normal_percent;
+                    $successproject->overdue_percent = $project->overdue_percent;
+                    $successproject->day = $project->day;
+                    $successproject->create_time = $project->create_time;
+                    $successproject->start_day = $project->start_day;
+                    $successproject->end_day = $now_time;
+                    if($successproject->save())
+                    {
+                        trace("向successproject表中插入了一条记录");
+                    }
+                    else
+                    {
+                        trace("successproject->save() error");
+                    }
+                }
 
                 //删除project
                 $project->delete();
@@ -357,7 +398,7 @@ class User extends Controller
             $details->borrow_id = $project->borrow_id;
             $details->lender_id = $lend_id;
             $details->lend_money = $lend_money;
-            $details->issuccess = $project->issuccess;
+            //$details->issuccess = $project->issuccess;
             if ($details->save()) {
                 //这里要跳转的是登陆页面
                 $this->success('恭喜，投资成功', 'lend');

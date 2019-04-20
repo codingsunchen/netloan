@@ -4,6 +4,7 @@ use think\Controller;
 use think\Db;
 use think\Url;
 use think\Log;
+use app\admin\model\Admin;
 use app\index\model\Users;
 use app\index\model\UserLevel;
 use app\index\model\Test;
@@ -17,13 +18,29 @@ use think\Request;
 use think\Response;
 class Index extends Controller
 {
+    public function test()
+    {
+        return view();
+    }
     public function index()
     {
         if (Session::has('adminstatus')) {
-            return view('index/show');
+
+            //获取users表中所有的用户，根据表中的字段判断是否是已认证的用户
+            //获取所有已认证的用户并展现出来
+            $list = Users::where('authentication', '=', 1)->select();
+            $this->assign('list', $list);
+            $this->assign('listcount', count($list));
+
+            //获取所有未认证的用户并展现出来
+            $nolist = Users::where('authentication', '=', 0)->select();
+            $this->assign('nolist', $nolist);
+            $this->assign('nolistcount', count($nolist));
+            return view( 'admin');
         }
         return view();
     }
+    
    
     /**
      * 在login方法中，先获取usesrname和password，然后访问数据库
@@ -40,12 +57,12 @@ class Index extends Controller
 
 
                 //连接数据库，user表，对比username和passward是否正确, 在网贷系统中每个用户的登陆用户名必须唯一
-                if ($user = Users::get(['username'=>$username,'password'=>$password]) )
+                if ($user = Admin::get(['username'=>$username,'password'=>$password]) )
                     {
                         //echo "true";
                         //查询成功，用户名和密码都正确
                         Session::set('adminstatus', 1);
-                        $this->success('登陆成功', 'index');
+                        $this->success('登陆成功', 'http://www.sc.com/index.php?s=/admin/index/index');
                     } else {
                     //用户名或密码错误，没有查到数据
                     $this->error('用户名或密码错误,请重新登陆', 'login');
@@ -57,17 +74,19 @@ class Index extends Controller
     }
 
     //退出登陆
-    public function logouot()
+    public function logout()
     {
-        Session::delete('status');
+        Session::delete('adminstatus');
         $this->success('退出当前账户成功', 'index');
     }
 
+
+    /*
     //注册用户
     public function register()
     {
         if ($_POST) {
-            /*
+            
             $response = Response::instance();
             $username = $response->param('username');
             $password = $response->param('password');
@@ -90,11 +109,12 @@ class Index extends Controller
 
                     //这里要跳转的是登陆页面，后期进行修改
                     $this->success('恭喜，注册成功','index');
-            }*/
+            }
             //这里要跳转的是登陆页面，后期进行修改
             $this->success('恭喜，注册成功', 'login');
         } else {
             return view();
         }
     }
+    */
 }

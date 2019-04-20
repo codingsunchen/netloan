@@ -115,7 +115,8 @@ class Index extends Controller
                         $this->error($file->getError());
                     }
                     //讲文件的路径和文件名拼接在一起，存放在数据库中
-                    $user->identity = $info->getRealPath();
+                    $identitypath = $info->getRealPath();
+                    $user->identity = substr($identitypath, 29);
 
                     // 获取表单上传文件 credit
                     $file = $request->file('credit');
@@ -129,7 +130,11 @@ class Index extends Controller
                         $this->error($file->getError());
                     }
                     //讲文件的路径和文件名拼接在一起，存放在数据库中
-                    $user->credit = $info->getRealPath();
+                    $creditpath = $info->getRealPath();
+                    
+                    $user->credit = substr($creditpath, 29);
+
+                    $user->authentication = 0;
 
                     if($user->save())
                     {

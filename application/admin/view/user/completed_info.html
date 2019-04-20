@@ -1,0 +1,17 @@
+{include file="index/header" title="项目详情"/}
+
+<div style="padding: 24px 48px;">
+
+    <a href="http://www.sc.com/admin.html">首页</a>
+    <h2>项目详情（{$listcount}）</h2>
+    {volist name="list" id="completed" }
+    <div class="info">
+        借款人ID：{$completed.borrow_id}<br />
+        借出人ID：{$completed.lender_id}<br />
+        该借出人所借出的钱：{$completed.lend_money}<br />
+        <a href="http://www.sc.com/index.php?s=admin/user/user_info/userid/{$completed.lender_id}">查看借出人信息</a>
+    </div>
+    {/volist}
+</div>
+
+{include file="index/footer" /}
