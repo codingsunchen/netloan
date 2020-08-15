@@ -1,0 +1,30 @@
+{include file="index/header" title="已完成还款的项目"/}
+
+<div style="padding: 24px 48px;">
+
+    <a href="http://www.sc.com/admin.html">首页</a>
+    <h2>项目信息（{$listcount}）</h2>
+    {volist name="list" id="successproject" }
+    <div class="info">
+        项目ID：{$successproject.id}<br />
+        借款人ID：{$successproject.borrow_id}<br />
+        借款的总钱数：{$successproject.total_money}<br />
+        还款的总钱数：{$successproject.repayment_money}<br />
+        正常利息：{$successproject.normal_percent}<br />
+        逾期利息：{$successproject.overdue_percent}<br />
+        <!--
+        实际借款天数：
+        {echo date_diff(date_create($successproject.start_day), date_create($successproject.end_day)->format("%a");}
+        <br \>
+        -->
+
+        项目发起时间：{$successproject.create_time}<br />
+        项目开始时间：{$successproject.start_day}<br />
+        项目还款时间：{$successproject.end_day}<br />
+        <a href="http://www.sc.com/index.php?s=admin/user/user_info/userid/{$successproject.borrow_id}">查看借款人信息</a>
+        <a href="http://www.sc.com/index.php?s=admin/user/completed_info/borrowid/{$successproject.borrow_id}/startday/{$successproject.start_day}">查看项目详情</a>
+    </div>
+    {/volist}
+</div>
+
+{include file="index/footer" /}

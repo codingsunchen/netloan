@@ -1,0 +1,31 @@
+{include file="index/header" title="个人中心"/}
+    <div>
+        <h1>个人中心</h1>
+    <a href="http://www.sc.com/index/user/index">返回首页</a>
+    <h2>用户名：{$myname}</h2>
+    <h2>账户余额：{$myaccount}</h2>
+    <h2>我的借出列表（{$mylendlist_count}）</h2>
+    {volist name="mylendlist" id="Details" }
+    <div class="info">
+        ID：{$Details.project_id}<br />
+        借款人id：{$Details.borrow_id}<br />
+        借出的钱数：{$Details.lend_money}<br />
+    </div>
+    {/volist}
+
+    <h2>我的借入列表（{$borrowlist_count}）</h2>
+    {volist name="borrowlist" id="project" }
+    <div class="info">
+        ID：{$project.id}<br />
+        借款的总钱数：{$project.total_money}<br />
+        正常利息：{$project.normal_percent}<br />
+        逾期利息：{$project.overdue_percent}<br />
+        借款天数：{$project.day}<br />
+        是否完成投标：{$project.issuccess}<br />
+        <a href="http://www.sc.com/index/user/repayment">立即还款</a>
+
+    </div>
+    {/volist}
+
+</div>
+{include file="index/footer" /}

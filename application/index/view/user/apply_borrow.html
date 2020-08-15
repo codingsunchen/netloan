@@ -1,0 +1,13 @@
+{include file="index/header" title="申请贷款"/}
+
+<h2>申请借款</h2>
+<!-- 注意要在form表单中写上 enctype="multipart/form-data" 属性，否则文件上传不了-->
+<FORM method="post" class="form" action="{:url('index/user/apply_borrow')}">
+    贷款金额：<INPUT type="text" class="text" name="total_money"><br />
+    借款天数：<INPUT type="text" class="text" name="day"><br />
+    正常利息：<INPUT type="text" class="text" name="normal_percent"><br />
+    逾期利息：<INPUT type="text" class="text" name="overdue_percent"><br />
+    <INPUT type="submit" class="btn" value=" 提交 ">
+</FORM>
+{include file="index/footer" /}
+
